@@ -12,7 +12,7 @@ async function readMfaCodeFromPrompt() {
     {
       type: 'input',
       name: 'code',
-      message: 'input your MFA code'
+      message: 'input your MFA code:'
     }
   ];
   const answers = await prompt(questions);

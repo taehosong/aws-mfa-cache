@@ -2,10 +2,20 @@ const AWS = require('aws-sdk');
 const mfa = require('./aws-mfa-cache');
 
 async function init() {
-  const { roleResponse } = await mfa();
+  const { roleResponse, config } = await mfa();
   
-  AWS.config.credentials = AWS.STS.credentialsFrom(roleResponse);
-  return roleResponse;
+  const credentials = new AWS.Credentials({
+    accessKeyId: roleResponse.Credentials.AccessKeyId,
+    secretAccessKey: roleResponse.Credentials.SecretAccessKey,
+    sessionToken: roleResponse.Credentials.SessionToken
+  });
+
+  AWS.config.update({
+    credentials: credentials,
+    region: config.region
+  });
+
+  return { credentials, region: config.region };
 }
 
 module.exports = init;
