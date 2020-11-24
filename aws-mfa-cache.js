@@ -36,10 +36,6 @@ function isValidCredentials(roleResponse) {
 async function assumeRole(config) {
   const tokenCode = await readMfaCodeFromPrompt();
 
-  AWS.config.update({
-    region: config.region,
-  });
-
   const sts = new AWS.STS();
   const roleResponse = await sts.assumeRole({
     RoleArn: config.role_arn,
@@ -56,8 +52,13 @@ async function assumeRole(config) {
  * @returns {Promise<{roleResponse: AWS.STS.AssumeRoleResponse, config: {region: string }>}}
  */
 async function mfa() {
-  let roleResponse = credStore.read();
   const config = loadAWSConfig();
+
+  AWS.config.update({
+    region: config.region,
+  });
+
+  let roleResponse = credStore.read();
 
   if (isValidCredentials(roleResponse) === false) {
     roleResponse = await assumeRole(config);
