@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const mfa = require('./aws-mfa-cache');
 
 (async () => {

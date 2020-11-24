@@ -1,7 +1,6 @@
 const AWS = require('aws-sdk');
 const mfa = require('./aws-mfa-cache');
 
-
 async function init() {
   const { roleReponse } = await mfa();
   
