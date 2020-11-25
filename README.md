@@ -1,5 +1,6 @@
 # aws-mfa-cache
 
+## SDK
 ```typescript
   const AWS = require('aws-sdk');
   const mfa = require('aws-mfa-cache');
@@ -8,8 +9,13 @@
 
   AWS.config.update({
     credentials: credentials,
-    region: config.region
+    region: region
   });
 
   // TODO ...
+```
+
+## CLI
+```bash
+ $ env $(aws-mfa-cache) node index.js
 ```
